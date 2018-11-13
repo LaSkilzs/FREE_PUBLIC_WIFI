@@ -28,6 +28,7 @@
 2. Location
     -- attributes
         *Name
+        *wifi_status
         *boro ID
         *zip ID
     -- Methods
@@ -39,7 +40,7 @@
       -- attributes
         *id
         *name
-4. Zip-Code
+4. Zip
       -- attributes
         *id
         *name
