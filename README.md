@@ -1,4 +1,4 @@
-# PUBLIC WIFI LOCATOR
+# FREE PUBLIC WIFI
 
 Project that provides users with the closest public entity that provides free service to the public.
 
