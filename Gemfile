@@ -7,10 +7,12 @@ gem 'byebug'
 #Database
 gem 'sqlite3'
 #ActiveRecord
-gem 'activerecord'
+gem 'sinatra-activerecord'
 #Scraping
 gem 'nokogiri', '1.8.5'
 #Testing
 gem 'rspec'
 gem 'rake'
 gem 'database_cleaner'
+#File requirements
+gem 'require_all'
