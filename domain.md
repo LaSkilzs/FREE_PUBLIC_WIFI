@@ -53,3 +53,28 @@ If necessary join table between users and Location
 *id
 *user_id
 *location_id
+
+
+
+
+11/14/2018
+
+1. error exceptions for validations
+  -- number checks  (making sure user choose correct numbers)
+  --
+
+2. how to set the default value of census_tract to 0
+
+3. creatively display output
+
+4. update animations
+
+5. We need close program off for all n or quit responses
+
+  result = []
+
+  result << choice << street
+
+  result = [1, "prospect street"]
+6. Test faves
+7. Test all options
