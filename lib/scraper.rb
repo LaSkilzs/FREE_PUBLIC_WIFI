@@ -31,15 +31,29 @@ class Scraper
 
     #Create all instances of location class
     self.open_file.each do |loc|
-        Location.create(
+        l = Location.create(
           name: loc["name"],
           wifi_status: loc["wifi_status"],
           nta_name: loc["nta_name"],
           address: loc["address"],
           zip: Zip.find_by(name: loc["zip"]),
-          boro: Boro.find_by(name: loc["boro"])
+          boro: Boro.find_by(name: loc["boro"]),
+          census_tract: loc["census_tract"]
           )
+
     end
+  end
+
+  def self.get_rid_of_nil
+
+
+    res = Location.select{|t| t.census_tract == nil}
+
+    res.each do |t|
+      t.census_tract = 0
+      t.save
+    end
+
   end
 
 
@@ -48,6 +62,6 @@ class Scraper
 end
 
 
-
+#Scraper.get_rid_of_nil
 #Scraper.open_file
 # Scraper.populate_db
