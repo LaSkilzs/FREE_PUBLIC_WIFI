@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 2018_11_13_221622) do
+ActiveRecord::Schema.define(version: 2018_11_14_203033) do
 
   create_table "boros", force: :cascade do |t|
     t.string "name"
@@ -24,6 +23,7 @@ ActiveRecord::Schema.define(version: 2018_11_13_221622) do
     t.string "address"
     t.integer "boro_id"
     t.integer "zip_id"
+    t.integer "census_tract", default: 0
   end
 
   create_table "users", force: :cascade do |t|
@@ -34,6 +34,5 @@ ActiveRecord::Schema.define(version: 2018_11_13_221622) do
   create_table "zips", force: :cascade do |t|
     t.string "name"
   end
-
 
 end
