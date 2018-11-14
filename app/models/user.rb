@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  @faves = []
+
   def self.start
     puts "Enter your username:"
     name = gets.chomp
@@ -30,7 +32,11 @@ class User < ActiveRecord::Base
   end
 
   def show_fav
+    if @faves == nil
+      puts "You don't have any favorites yet!"
+    else
     puts @faves
+  end
   end
 
   def add_fav(location)

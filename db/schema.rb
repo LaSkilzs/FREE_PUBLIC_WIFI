@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2018_11_14_203033) do
     t.string "address"
     t.integer "boro_id"
     t.integer "zip_id"
-    t.string "census_tract", default: "0"
+    t.integer "census_tract", default: 0
   end
 
   create_table "users", force: :cascade do |t|

@@ -38,7 +38,7 @@ class Scraper
           address: loc["address"],
           zip: Zip.find_by(name: loc["zip"]),
           boro: Boro.find_by(name: loc["boro"]),
-          census_tract: loc["census_tract"]
+          census_tract: loc["census_tract"].to_i
           )
 
     end
@@ -56,9 +56,15 @@ class Scraper
 
   end
 
+  def self.change_to_int
+    Location.all.each do |t|
+      t.update_at census_tract.to_i
+    end
+  end
 
 
-
+Scraper.populate_db
+Scraper.get_rid_of_nil
 end
 
 
