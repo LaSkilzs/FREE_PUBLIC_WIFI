@@ -10,10 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_203033) do
+ActiveRecord::Schema.define(version: 2018_11_15_184341) do
 
   create_table "boros", force: :cascade do |t|
     t.string "name"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "location_id"
   end
 
   create_table "locations", force: :cascade do |t|

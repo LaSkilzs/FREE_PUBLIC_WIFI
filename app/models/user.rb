@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
-
-
+has_many :favorites
 
   def self.start
     prompt = TTY::Prompt.new
@@ -35,18 +34,20 @@ class User < ActiveRecord::Base
   end
 
   def show_fav
-    if @faves == nil
+
+    if Favorite.select{|t| t.user_id == self.id} == []
       puts "You don't have any favorites yet! Try adding some!"
       puts ""
       self.display_choices
     else
-    puts @faves
+    puts Favorite.select{|t| t.user_id == self.id}.map{|t| t.location.address}
+    
   end
   end
 
-  def add_fav(location)
-    binding.pry
-    @faves << location
+  def add_fav(loc)
+    Favorite.create(user: self,location: loc)
+
   end
 
   def search_location

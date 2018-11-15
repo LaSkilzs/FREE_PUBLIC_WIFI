@@ -2,6 +2,7 @@ class Location < ActiveRecord::Base
 
   belongs_to :zip
   belongs_to :boro
+  has_many :favorites
 
   # Location Methods
 
@@ -32,9 +33,18 @@ class Location < ActiveRecord::Base
       input = prompt.enum_select("Please enter choice:", options)
 
       if input == "Add_to_favorites"
-        add = prompt.enum_select("Please enter number of location to add to favorites:")
-          if result[to_add.to_i - 1] != nil
-            user.add_fav(result[to_add.to_i - 1])
+        choices = {result[x].address => x, result[x+1].address => x+1}
+        #add = prompt.enum_select("Please enter number of location to add to favorites:", choices)
+        add = prompt.select("Please choose location to add to favorites:") do |menu|
+          menu.default 5
+          menu.choice result[x].address, 1
+          menu.choice result[x+1].address, 2
+          menu.choice result[x+2].address, 3
+          menu.choice result[x+3].address, 4
+          menu.choice result[x+4].address, 5
+        end
+          if result[add.to_i - 1] != nil
+            user.add_fav(result[add.to_i - 1])
           else
             puts "Invalid entry please try again."
           end
