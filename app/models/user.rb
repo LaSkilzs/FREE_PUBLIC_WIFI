@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
   attr_accessor :faves
-    def initialize()
+    def initialize
       @faves = []
     end
 
