@@ -22,34 +22,33 @@ class Location < ActiveRecord::Base
     end
 
     result[x..y].each_with_index {|r,ind| p "#{ind + x+1}. " +  r.address + ", " + r.boro.name + ", " + r.zip.name}
-
-    # result = most_popular[0..1] + retrieve_data[0..2]
-    # retrieve_data.each {|r| puts r.address + ", " +  r.zip.name + ", " + r.boro.name}
+    binding.pry
     valid = false
     while !valid do
       prompt = TTY::Prompt.new
       options = %w(Add_to_favorites See_more_results New_search Quit)
       input = prompt.enum_select("Please enter choice:", options)
 
-      if input == "Add_to_favorites"
-        add = prompt.enum_select("Please enter number of location to add to favorites:")
-          if result[to_add.to_i - 1] != nil
-            user.add_fav(result[to_add.to_i - 1])
+      case input
+      when "Add_to_favorites"
+
+        options = %w(1 2 3 4 5 Go_back Quit)
+        add = prompt.enum_select("Please enter number of location to add to favorites:", options)
+          if result[add.to_i-1] != nil
+            user.add_fav(result[add.to_i-1])
           else
             puts "Invalid entry please try again."
           end
           valid = false
-        elsif input == "See_more_results"
-          puts ""
+      when "See_more_results"
           valid = true
           self.see_more(x+5,y+5,result,user)
-        elsif input == "New_search"
-          puts ""
+      when  "New_search"
           valid = true
           user.display_choices
-        elsif input == "Quit"
+      when "Quit"
           User.end
-        else
+      else
           puts "Invalid choice! Please try again!"
           valid = false
       end
