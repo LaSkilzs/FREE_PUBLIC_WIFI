@@ -16,3 +16,7 @@ gem 'rake'
 gem 'database_cleaner'
 #File requirements
 gem 'require_all'
+#Command line Art
+gem 'artii'
+#TTY-prompts
+gem 'tty-prompt'
