@@ -18,9 +18,9 @@ class Location < ActiveRecord::Base
       user.display_choices
       return
     elsif x == 0
-      puts "Top 5 search results: "
+      puts "Search results: "
     else
-      puts "Here are the next 5 results:"
+      puts "More results:"
     end
 
     if result != nil
@@ -33,7 +33,7 @@ class Location < ActiveRecord::Base
     while !valid do
       prompt = TTY::Prompt.new
       options = %w(Add_to_favorites See_more_results New_search Quit)
-      input = prompt.enum_select("Please enter choice:", options)
+      input = prompt.select("Please enter choice:", options)
 
       if input == "Add_to_favorites"
         choices = {result[x].address => x, result[x+1].address => x+1}

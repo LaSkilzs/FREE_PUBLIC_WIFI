@@ -41,19 +41,21 @@ has_many :favorites
       self.display_choices
     else
     puts Favorite.select{|t| t.user_id == self.id}.map{|t| t.location.address}.uniq
-
+    self.display_choices
   end
   end
 
   def add_fav(loc)
     Favorite.create(user: self,location: loc)
+    puts ""
+    self.display_choices
 
   end
 
   def search_location
     prompt = TTY::Prompt.new
     options = %w(Enter_street Enter_zip Enter_boro Go_back Quit)
-    search = prompt.enum_select("Choose search method:", options)
+    search = prompt.select("Choose search method:", options)
 
 
     case search
@@ -65,7 +67,7 @@ has_many :favorites
         Location.retrieve_data("zip", zip, self)
       when "Enter_boro"
         options = %w(Manhattan/NYC Brooklyn Queens Bronx Staten_Island)
-        choice = prompt.enum_select("Choose boro:", options)
+        choice = prompt.select("Choose boro:", options)
 
         case choice
         when "Manhattan/NYC"
