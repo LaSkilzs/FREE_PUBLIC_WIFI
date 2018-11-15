@@ -40,8 +40,8 @@ has_many :favorites
       puts ""
       self.display_choices
     else
-    puts Favorite.select{|t| t.user_id == self.id}.map{|t| t.location.address}
-    
+    puts Favorite.select{|t| t.user_id == self.id}.map{|t| t.location.address}.uniq
+
   end
   end
 
