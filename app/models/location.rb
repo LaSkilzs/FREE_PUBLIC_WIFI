@@ -16,14 +16,16 @@ class Location < ActiveRecord::Base
       puts "Sorry, no more results!"
       puts ""
       user.display_choices
+      return
     elsif x == 0
       puts "Top 5 search results: "
     else
       puts "Here are the next 5 results:"
     end
 
-
+    if result != nil
     result[x..y].each_with_index {|r,ind| p "#{ind + x+1}. " +  r.address + ", " + r.boro.name + ", " + r.zip.name}
+    end
     max = result.length
     # result = most_popular[0..1] + retrieve_data[0..2]
     # retrieve_data.each {|r| puts r.address + ", " +  r.zip.name + ", " + r.boro.name}
@@ -102,7 +104,8 @@ class Location < ActiveRecord::Base
   end
 
   def self.see_more(x,y,result,user)
-    display_method(x,y,result,user)
+      display_method(x,y,result,user)
+
   end
 
 
