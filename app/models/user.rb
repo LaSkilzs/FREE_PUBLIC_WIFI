@@ -1,13 +1,10 @@
 class User < ActiveRecord::Base
 
-  attr_accessor :faves
-    def initialize
-      @faves = []
-    end
+
 
   def self.start
-    puts "Enter your username:"
-    name = gets.chomp
+    prompt = TTY::Prompt.new
+    name = prompt.ask("Enter your username:")
     self.find_or_create_by(username: name).display_choices
   end
 
@@ -17,23 +14,18 @@ class User < ActiveRecord::Base
   end
 
   def display_choices
-    puts "Hi #{self.username}, please enter choice:"
-    puts "1. Show favorites"
-    puts "2. Enter location"
-    puts "3. Go Back"
-    puts "4. Quit"
-    puts ""
-      choice = gets.chomp
-
+    prompt = TTY::Prompt.new
+    options = %w(Show_favorites Enter_location Go_back Quit)
+    choice = prompt.select("Hi #{self.username}, please enter choice:", options)
 
     case choice
-    when "1"
+    when "Show_favorites"
         self.show_fav
-      when "2"
+      when "Enter_location"
         self.search_location
-      when "3"
+      when "Go_back"
         User.start
-      when "4"
+      when "Quit"
         User.end
       else
         puts "Invalid choice! Please try again!"
@@ -57,55 +49,39 @@ class User < ActiveRecord::Base
     @faves << location
   end
 
-
   def search_location
-    puts ""
-    puts "Choose search method:"
-    puts "1. Enter street"
-    puts "2. Enter zip"
-    puts "3. Enter boro"
-    puts "4. Go Back"
-    puts "5. Quit"
-    puts "Enter choice:"
-      search = gets.chomp
+    prompt = TTY::Prompt.new
+    options = %w(Enter_street Enter_zip Enter_boro Go_back Quit)
+    search = prompt.enum_select("Choose search method:", options)
 
 
-    case search.to_i
-      when 1
-        puts "Enter street"
-        street = gets.chomp
-        Location.retrieve_data("address", street,self)
-      when 2
-        puts "Enter zip"
-        zip = gets.chomp
+    case search
+    when "Enter_street"
+        street = prompt.ask("Enter street")
+        Location.retrieve_data("address", street, self)
+      when "Enter_zip"
+        zip = prompt.ask("Enter zip")
         Location.retrieve_data("zip", zip, self)
+      when "Enter_boro"
+        options = %w(Manhattan/NYC Brooklyn Queens Bronx Staten_Island)
+        choice = prompt.enum_select("Choose boro:", options)
 
-      when 3
-        puts "Choose boro:"
-        puts ""
-        puts "1. Manhattan/NYC"
-        puts "2. Brooklyn"
-        puts "3. Queens"
-        puts "4. Bronx"
-        puts "5. Staten Island"
-        puts "Enter choice:"
-          choice = gets.chomp
         case choice
-          when "1"
+        when "Manhattan/NYC"
             boro = "Manhattan"
-          when "2"
+          when "Brooklyn"
             boro = "Brooklyn"
-          when "3"
+          when "Queens"
             boro = 'Queens'
-          when "4"
+          when "Bronx"
             boro = "Bronx"
-          when "5"
+          when "Staten_Island"
             boro = "Staten Island"
           end
         Location.retrieve_data("boro", boro, self)
-      when 4
+      when "Go_back"
         self.display_choices
-      when 5
+      when "Quit"
         User.end
       else
         puts "Invalid choice! Please try again!"
