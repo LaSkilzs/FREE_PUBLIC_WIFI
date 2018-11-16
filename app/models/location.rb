@@ -7,7 +7,7 @@ class Location < ActiveRecord::Base
   # Location Methods
 
   def self.display_method(x=0,y=4,result,user)
-
+    puts ""
     if result == []
       puts "Sorry nothing matches your search. Please try again."
       puts ""
@@ -33,10 +33,12 @@ class Location < ActiveRecord::Base
     while !valid do
       prompt = TTY::Prompt.new
       options = %w(Add_to_favorites See_more_results New_search Quit)
+      puts ""
       input = prompt.select("Please enter choice:", options)
 
       if input == "Add_to_favorites"
         choices = {result[x].address => x, result[x+1].address => x+1}
+
         #add = prompt.enum_select("Please enter number of location to add to favorites:", choices)
         add = prompt.select("Please choose location to add to favorites:") do |menu|
           menu.default 1
@@ -55,7 +57,9 @@ class Location < ActiveRecord::Base
           if result[x+4] != nil
           menu.choice result[x+4].address, 5
           end
+
         end
+        user.add_fav(result[x+(add-1)])
           # if result[add.to_i - 1] != nil
           #   user.add_fav(result[add.to_i - 1])
           # else

@@ -13,6 +13,7 @@ has_many :favorites
   end
 
   def display_choices
+    puts ""
     prompt = TTY::Prompt.new
     options = %w(Show_favorites Enter_location Go_back Quit)
     choice = prompt.select("Hi #{self.username}, please enter choice:", options)
@@ -40,13 +41,16 @@ has_many :favorites
       puts ""
       self.display_choices
     else
-    puts Favorite.select{|t| t.user_id == self.id}.map{|t| t.location.address}.uniq
+    puts ""
+    puts "FAVORITES:"
+    puts Favorite.select{|t| t.user_id == self.id}.map{|t| t.location.address + ", " + t.location.boro.name + ", " + t.location.zip.name}.uniq
+    puts ""
     self.display_choices
   end
   end
 
   def add_fav(loc)
-    Favorite.create(user: self,location: loc)
+    Favorite.create!(user: self,location: loc)
     puts ""
     self.display_choices
 
