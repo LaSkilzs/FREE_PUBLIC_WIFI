@@ -22,6 +22,11 @@ GEM
     equatable (0.5.0)
     i18n (1.1.1)
       concurrent-ruby (~> 1.0)
+    lolcat (42.1.42)
+      paint (~> 0.8.3)
+      trollop (~> 1.16.2)
+    lolize (0.0.3)
+      paint (~> 0.8.3)
     method_source (0.9.2)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
@@ -29,6 +34,7 @@ GEM
     necromancer (0.4.0)
     nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
+    paint (0.8.7)
     pastel (0.7.2)
       equatable (~> 0.5.0)
       tty-color (~> 0.4.0)
@@ -65,6 +71,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.8)
     timers (4.2.0)
+    trollop (1.16.2)
     tty-color (0.4.3)
     tty-cursor (0.6.0)
     tty-prompt (0.17.2)
@@ -89,6 +96,8 @@ DEPENDENCIES
   artii
   byebug
   database_cleaner
+  lolcat
+  lolize
   nokogiri (= 1.8.5)
   pry
   rake

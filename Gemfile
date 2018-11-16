@@ -20,3 +20,5 @@ gem 'require_all'
 gem 'artii'
 #TTY-prompts
 gem 'tty-prompt'
+gem 'lolcat'
+gem 'lolize'

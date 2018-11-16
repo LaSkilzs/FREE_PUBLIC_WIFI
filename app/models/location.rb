@@ -4,8 +4,13 @@ class Location < ActiveRecord::Base
   belongs_to :boro
   has_many :favorites
 
-  # Location Methods
+  # # Location Methods
+  #   .display_method
+  #   .retrieve_data
+  #   .most_popular
+  #   .see_more
 
+  #Displays the matching results only 5 at a time
   def self.display_method(x=0,y=4,result,user)
     puts ""
     if result == []
@@ -23,23 +28,15 @@ class Location < ActiveRecord::Base
       puts "More results:"
     end
 
-    if result != nil
     result[x..y].each_with_index {|r,ind| p "#{ind + x+1}. " +  r.address + ", " + r.boro.name + ", " + r.zip.name}
-    end
     max = result.length
-    # result = most_popular[0..1] + retrieve_data[0..2]
-    # retrieve_data.each {|r| puts r.address + ", " +  r.zip.name + ", " + r.boro.name}
-    valid = false
-    while !valid do
+
       prompt = TTY::Prompt.new
       options = %w(Add_to_favorites See_more_results New_search Quit)
       puts ""
       input = prompt.select("Please enter choice:", options)
 
       if input == "Add_to_favorites"
-        choices = {result[x].address => x, result[x+1].address => x+1}
-
-        #add = prompt.enum_select("Please enter number of location to add to favorites:", choices)
         add = prompt.select("Please choose location to add to favorites:") do |menu|
           menu.default 1
           if result[x] != nil
@@ -57,36 +54,27 @@ class Location < ActiveRecord::Base
           if result[x+4] != nil
           menu.choice result[x+4].address, 5
           end
-
         end
         user.add_fav(result[x+(add-1)])
-          # if result[add.to_i - 1] != nil
-          #   user.add_fav(result[add.to_i - 1])
-          # else
-          #   puts "Invalid entry please try again."
-          # end
-           valid = true
+
         elsif input == "See_more_results"
           puts ""
-          valid = true
           if y+5 > max
           self.see_more(x+5,max,result,user)
           else
              self.see_more(x+5,y+5,result,user)
-           end
+          end
+
         elsif input == "New_search"
           puts ""
-          valid = true
           user.display_choices
+
         elsif input == "Quit"
           User.end
-        else
-          puts "Invalid choice! Please try again!"
-          valid = false
         end
     end
-  end
 
+  #Searches the database based on the info the user input (either address, zip or boro)
   def self.retrieve_data(type, option, user)
     if type == "address"
       option = option.upcase
@@ -102,15 +90,15 @@ class Location < ActiveRecord::Base
     self.most_popular(result,user)
   end
 
+  #Filters results by most popular (most densly populated areas)
   def self.most_popular(search_list,user)
     result = search_list.sort_by{|t| t.census_tract}.reverse
     self.see_more(0,4,result,user)
   end
 
+  #Calls display_method in order to output next set of results
   def self.see_more(x,y,result,user)
       display_method(x,y,result,user)
-
   end
-
 
 end
