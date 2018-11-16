@@ -22,3 +22,4 @@ gem 'artii'
 gem 'tty-prompt'
 gem 'lolcat'
 gem 'lolize'
+gem "audio-playback"
